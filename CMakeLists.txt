@@ -9,6 +9,7 @@ find_package(ament_cmake_auto REQUIRED)
 ament_auto_find_build_dependencies()
 
 ament_auto_add_executable(${PROJECT_NAME} src/v2imp.cpp src/v2imp_node.cpp)
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}
