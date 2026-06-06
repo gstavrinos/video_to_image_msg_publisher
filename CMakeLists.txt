@@ -5,26 +5,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(cv_bridge REQUIRED)
-find_package(OpenCV REQUIRED)
+find_package(ament_cmake_auto REQUIRED)
+ament_auto_find_build_dependencies()
 
-include_directories(include)
-
-add_executable(${PROJECT_NAME} src/v2imp.cpp src/v2imp_node.cpp)
-
-target_link_libraries(${PROJECT_NAME}
-  ${OpenCV_LIBRARIES}
-)
-
-ament_target_dependencies(${PROJECT_NAME}
-  rclcpp
-  sensor_msgs
-  cv_bridge
-  OpenCV
-)
+ament_auto_add_executable(${PROJECT_NAME} src/v2imp.cpp src/v2imp_node.cpp)
 
 install(TARGETS ${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}
@@ -36,4 +20,7 @@ install(DIRECTORY config
   DESTINATION share/${PROJECT_NAME}/config/
 )
 
-ament_package()
+ament_auto_package(
+    USE_SCOPED_HEADER_INSTALL_DIR
+    INSTALL_TO_SHARE launch config
+)
